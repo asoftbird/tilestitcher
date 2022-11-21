@@ -1,0 +1,6 @@
+/venv/
+*.db
+*.log
+*.env
+*.jpg
+*.png
