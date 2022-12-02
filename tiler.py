@@ -1,5 +1,4 @@
 import os
-import re
 from PIL import Image
 
 # config
@@ -7,24 +6,11 @@ INPUTDIR = os.getcwd()+"\\input\\"
 OUTPUTDIR = os.getcwd()+"\\output\\"
 
 # this can be detected automatically based on highest tile number in input coordinates
-GRIDSIZE_X = 2
-GRIDSIZE_Y = 2 
+GRIDSIZE_X = 8
+GRIDSIZE_Y = 8 
 Image.MAX_IMAGE_PIXELS = 933120000
 
 #TODO: parse arguments for commandline operation
-
-
-def get_tilecoords(filename):
-    xcoords = []
-    ycoords = []
-    # matches format 'filename_Xcoord_Ycoord' as (xcoord, ycoord)
-    result = re.search('\w_(\d{1,2})_(\d{1,2})', filename)
-    xcoords.append(int(result.group(1)))
-    ycoords.append(int(result.group(2)))
-    max_x = max(xcoords)
-    max_y = max(ycoords)
-
-    return int(result.group(1)), int(result.group(2)), max_x, max_y
 
 input_filenames = []
 for file in os.listdir(INPUTDIR):
@@ -53,6 +39,6 @@ def merge_images(filelist, gridsize_x, gridsize_y):
 
     return image_combined
 
-merged = merge_images(input_filenames, 8, 8) 
+merged = merge_images(input_filenames, GRIDSIZE_X, GRIDSIZE_Y) 
 
 merged.save(OUTPUTDIR+"TEST.png")
