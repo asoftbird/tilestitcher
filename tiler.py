@@ -58,7 +58,10 @@ input_filenames = []
 for file in os.listdir(input_path):
     input_filenames.append(file)
 
+
 def merge_images(filelist, gridsize_x, gridsize_y):
+    global resulting_width, resulting_height
+
     image_objects = [Image.open(input_path+filename) for filename in filelist]
 
     # assuming all images have the same size
@@ -78,10 +81,10 @@ def merge_images(filelist, gridsize_x, gridsize_y):
             image_combined.paste(im=image_objects[image_index], box=(X_index*image_width, resulting_height-(Y_index*image_height)-image_height)) 
             image_index += 1
 
-    print(f"Exported image to {output_path}.")
     return image_combined
 
 merged = merge_images(input_filenames, GRIDSIZE_X, GRIDSIZE_Y) 
 
 merged.save(output_path)
-
+if os.path.exists(output_path):
+    print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(output_path).st_size/1E6,2)}MB) to {output_path}.")
