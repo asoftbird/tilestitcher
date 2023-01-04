@@ -6,7 +6,7 @@ from PIL import Image
 
 argv = sys.argv[1:]
 
-options = "i:o:x:y:s:d:rs:v"
+options = "i:o:x:y:g:d:rs:v"
 longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "size=", "dpi=", "random", "seed=", "verbose"]
 helptext = [
     "--help or -h: Print this help list.", 
@@ -14,7 +14,7 @@ helptext = [
     "--out or -o: Specify output file location.",
     "--xsize or -x: Specify tile grid size in the X direction.",
     "--ysize or -y: Specify tile grid size in the Y direction.",
-    "--size or -s: Specify tile grid size in X and Y directions."
+    "--gridsize or -g: Specify tile grid size in X and Y directions."
     "--dpi or -d: Specify output image DPI (does not affect pixel size)."
     "--random or -r: Randomize placement of tiles in grid.",
     "--seed or -s: Random seed.",
@@ -56,7 +56,7 @@ for opt, arg in opts:
         GRIDSIZE_X = int(arg)
     elif opt in ['-y', '--ysize']:
         GRIDSIZE_Y = int(arg)
-    elif opt in ['-s', '--size']:
+    elif opt in ['-g', '--gridsize']:
         GRIDSIZE_X = int(arg)
         GRIDSIZE_Y = int(arg)
     elif opt in ['-d', '--dpi']:
