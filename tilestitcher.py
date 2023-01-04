@@ -33,7 +33,7 @@ GRIDSIZE_X = 0
 GRIDSIZE_Y = 0
 DEBUGLOG = False
 RANDOMIZE = False
-SEED = int(random())
+SEED = random.random()
 
 if not opts:
     sys.exit("Not enough arguments! Use --help for help.")
