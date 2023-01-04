@@ -117,8 +117,7 @@ def merge_images(filelist, gridsize_x, gridsize_y):
 
 merged = merge_images(input_filenames, GRIDSIZE_X, GRIDSIZE_Y) 
 print(f"Exporting tiled image...")
-
-# TODO: Embed DPI in file so PrintFactory knows what to do 
-merged.save(OUTPUT_PATH, compress_level=5)
+ 
+merged.save(OUTPUT_PATH, compress_level=5, dpi=(300, 300))
 if os.path.exists(OUTPUT_PATH):
     print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(OUTPUT_PATH).st_size/1E6,2)}MB) to {OUTPUT_PATH}.")
