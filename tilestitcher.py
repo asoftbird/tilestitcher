@@ -14,9 +14,11 @@ helptext = [
     "--out or -o: Specify output file location.",
     "--xsize or -x: Specify tile grid size in the X direction.",
     "--ysize or -y: Specify tile grid size in the Y direction.",
-    "--random or -r: Randomize placement of tiles in grid."
-    "--seed or -s: Random seed."
-    "--verbose or -v: Write debug info to console during operation."
+    "--random or -r: Randomize placement of tiles in grid.",
+    "--seed or -s: Random seed.",
+    "--verbose or -v: Write debug info to console during operation.",
+    "If there are not enough images available to reach the desired grid size,",
+    "random tiles will be selected from the set to pad the input image list."
     ]
 
 try:
