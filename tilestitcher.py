@@ -134,4 +134,4 @@ print(f"Exporting tiled image...")
  
 merged.save(OUTPUT_PATH, compress_level=5, dpi=(DPI, DPI))
 if os.path.exists(OUTPUT_PATH):
-    print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(OUTPUT_PATH).st_size/1E6,2)}MB) to {OUTPUT_PATH}.")
+    print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(OUTPUT_PATH).st_size/1E6,2)}MB, {DPI}dpi) to {OUTPUT_PATH}.")
