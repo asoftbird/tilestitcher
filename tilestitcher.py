@@ -70,10 +70,26 @@ for file in os.listdir(INPUT_PATH):
     input_filenames.append(file)
 
 
+def pad_image_list(input_list, newsize):
+    image_count = len(input_list)
+    add_count = newsize - image_count
+
+    for _ in range(0, add_count):
+        input_list.append(input_list[random.randint(0, image_count)])
+
+    print(f"Padded list from {image_count} to {len(input_list)} items.")
+
+    return input_list
+
+
 def merge_images(filelist, gridsize_x, gridsize_y):
     global resulting_width, resulting_height
 
     image_objects = [Image.open(INPUT_PATH+filename) for filename in filelist]
+
+    if (gridsize_x * gridsize_y) > len(image_objects):
+        print(f"Expected {gridsize_x * gridsize_y} images while {len(image_objects)} were provided!")
+        image_objects = pad_image_list(image_objects, (gridsize_x * gridsize_y))
 
     if RANDOMIZE == True:
         print(f"Randomizing tile order with seed {SEED}.")
@@ -91,16 +107,18 @@ def merge_images(filelist, gridsize_x, gridsize_y):
     image_index = 0
     for y_index in range(0, gridsize_y):
         for x_index in range(0, gridsize_x):
+            # using an offset height as PIL has the 0,0 coordinate in the upper left corner instead of bottom left
+            image_combined.paste(im=image_objects[image_index], box=(x_index*image_width, resulting_height-(y_index*image_height)-image_height))
             if DEBUGLOG == True:
                 print(f"X: {x_index} Y: {y_index}, index: {image_index}, image: {image_objects[x_index]}")
-            # using an offset height as PIL has the 0,0 coordinate in the upper left corner instead of bottom left
-            image_combined.paste(im=image_objects[image_index], box=(x_index*image_width, resulting_height-(y_index*image_height)-image_height)) 
             image_index += 1
 
     return image_combined
 
 merged = merge_images(input_filenames, GRIDSIZE_X, GRIDSIZE_Y) 
 print(f"Exporting tiled image...")
+
+# TODO: Embed DPI in file so PrintFactory knows what to do 
 merged.save(OUTPUT_PATH, compress_level=5)
 if os.path.exists(OUTPUT_PATH):
     print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(OUTPUT_PATH).st_size/1E6,2)}MB) to {OUTPUT_PATH}.")
