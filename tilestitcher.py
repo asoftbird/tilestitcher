@@ -6,8 +6,8 @@ from PIL import Image
 
 argv = sys.argv[1:]
 
-options = "i:o:x:y:rs:v"
-longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "random", "seed=", "verbose"]
+options = "i:o:x:y:xy:rs:v"
+longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "xysize=", "random", "seed=", "verbose"]
 helptext = [
     "--help or -h: Print this help list.", 
     "--in or -i: Specify file input folder.", 
@@ -53,6 +53,9 @@ for opt, arg in opts:
         GRIDSIZE_X = int(arg)
     elif opt in ['-y', '--ysize']:
         GRIDSIZE_Y = int(arg)
+    elif opt in ['-xy', '--xysize']:
+        GRIDSIZE_X = int(arg)
+        GRIDSIZE_Y = int(arg)
     elif opt in ['-r', '--random']:
         RANDOMIZE = True
     elif opt in ['-s', '--random']:
@@ -63,7 +66,7 @@ for opt, arg in opts:
         sys.exit("Not enough arguments! Use --help for help.")
 
 if GRIDSIZE_X == 0 or GRIDSIZE_Y == 0:
-    sys.exit("Grid size cannot be 0; use --xsize and --ysize to specify tile grid dimensions.")
+    sys.exit("Grid size cannot be 0; use --xsize [int] and --ysize [int] or --xysize [int] to specify tile grid dimensions.")
 
 input_filenames = []
 for file in os.listdir(INPUT_PATH):
