@@ -83,10 +83,14 @@ def pad_image_list(input_list, newsize):
     add_count = newsize - image_count
     statistics_list = []
 
-    for _ in range(0, add_count):
-        randint = random.randint(0, image_count-1)
-        input_list.append(input_list[randint])
-        statistics_list.append(randint)
+    # initialize statistics list to make sure percentages add up to 100%
+    for i in range(0, image_count):
+        statistics_list.append(i)
+
+    for i in range(0, add_count):
+        pick = i % image_count
+        input_list.append(input_list[pick])
+        statistics_list.append(pick)
 
     print(f"Padded list from {image_count} to {len(input_list)} items.")
     for variant in range(0, image_count):
@@ -106,6 +110,8 @@ def merge_images(filelist, gridsize_x, gridsize_y):
         image_objects = pad_image_list(image_objects, (gridsize_x * gridsize_y))
 
     if RANDOMIZE == True:
+        # TODO: tile picking isn't quite random enough yet / make sure tiles don't end up close together too often
+        # or implement the 4 color theorem? 
         print(f"Randomizing tile order with seed {SEED}.")
         random.seed(SEED)
         random.shuffle(image_objects)
