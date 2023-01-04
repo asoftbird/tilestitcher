@@ -34,12 +34,12 @@ OR:
 
 **Optional arguments:**  
 --help or -h:       Print this help list.  
---verbose or -v:    Write debug info to console during operation.
+--verbose or -v:    Write debug info to console during operation.  
 
 --in or -i:         Specify file input folder.  
 --out or -o:        Specify output file location, including image file extension of your choice.   
---random or -r:     Randomize order of input tiles. 
---seed or -s:       Specify a random seed to use.
---dpi or -d:        Write output image with a specific dpi (does not affect image size).
+--random or -r:     Randomize order of input tiles.   
+--seed or -s:       Specify a random seed to use.  
+--dpi or -d:        Write output image with a specific dpi (does not affect image size).  
 
 
