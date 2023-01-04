@@ -6,14 +6,16 @@ from PIL import Image
 
 argv = sys.argv[1:]
 
-options = "i:o:x:y:xy:rs:v"
-longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "xysize=", "random", "seed=", "verbose"]
+options = "i:o:x:y:s:d:rs:v"
+longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "size=", "dpi=", "random", "seed=", "verbose"]
 helptext = [
     "--help or -h: Print this help list.", 
     "--in or -i: Specify file input folder.", 
     "--out or -o: Specify output file location.",
     "--xsize or -x: Specify tile grid size in the X direction.",
     "--ysize or -y: Specify tile grid size in the Y direction.",
+    "--size or -s: Specify tile grid size in X and Y directions."
+    "--dpi or -d: Specify output image DPI (does not affect pixel size)."
     "--random or -r: Randomize placement of tiles in grid.",
     "--seed or -s: Random seed.",
     "--verbose or -v: Write debug info to console during operation.",
@@ -33,6 +35,7 @@ INPUT_PATH = os.getcwd()+"\\input\\"
 OUTPUT_PATH = os.getcwd()+"\\output\\output.png"
 GRIDSIZE_X = 0
 GRIDSIZE_Y = 0
+DPI = 300
 DEBUGLOG = False
 RANDOMIZE = False
 SEED = random.random()
@@ -53,9 +56,11 @@ for opt, arg in opts:
         GRIDSIZE_X = int(arg)
     elif opt in ['-y', '--ysize']:
         GRIDSIZE_Y = int(arg)
-    elif opt in ['-xy', '--xysize']:
+    elif opt in ['-s', '--size']:
         GRIDSIZE_X = int(arg)
         GRIDSIZE_Y = int(arg)
+    elif opt in ['-d', '--dpi']:
+        DPI = int(arg)
     elif opt in ['-r', '--random']:
         RANDOMIZE = True
     elif opt in ['-s', '--random']:
@@ -66,7 +71,7 @@ for opt, arg in opts:
         sys.exit("Not enough arguments! Use --help for help.")
 
 if GRIDSIZE_X == 0 or GRIDSIZE_Y == 0:
-    sys.exit("Grid size cannot be 0; use --xsize [int] and --ysize [int] or --xysize [int] to specify tile grid dimensions.")
+    sys.exit("Grid size cannot be 0; use --xsize [int] and --ysize [int] or --size [int] to specify tile grid dimensions.")
 
 input_filenames = []
 for file in os.listdir(INPUT_PATH):
@@ -127,6 +132,6 @@ def merge_images(filelist, gridsize_x, gridsize_y):
 merged = merge_images(input_filenames, GRIDSIZE_X, GRIDSIZE_Y) 
 print(f"Exporting tiled image...")
  
-merged.save(OUTPUT_PATH, compress_level=5, dpi=(300, 300))
+merged.save(OUTPUT_PATH, compress_level=5, dpi=(DPI, DPI))
 if os.path.exists(OUTPUT_PATH):
     print(f"Exported image with dimensions {resulting_width}x{resulting_height} ({round(os.stat(OUTPUT_PATH).st_size/1E6,2)}MB) to {OUTPUT_PATH}.")
