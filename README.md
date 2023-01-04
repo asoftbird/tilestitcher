@@ -15,6 +15,9 @@ These are then tiled in the following order: (left to right, bottom to top)
 
 Grid can be any size you want, I've only tested with square configurations but I'm pretty sure rectangular grids also work.
 
+If there are less images than grid tiles, the script randomly selects images from the input set to pad the grid to the set size. 
+
+
 ## Usage
 
 Run the script in commandline using python, ie.  
@@ -24,6 +27,8 @@ Use --help for general help on its usage.
 If the input or output directories aren't specified, the script assumes that input images are located in `\current-dir\input\` and will write the output to `\current-dir\output\output.png`. 
 
 **Required arguments:**  
+--size or -s:       Specify tile grid size in both X and Y directions  
+OR:  
 --xsize or -x:      Specify tile grid size in the X direction.  
 --ysize or -y:      Specify tile grid size in the Y direction.  
 
@@ -33,5 +38,8 @@ If the input or output directories aren't specified, the script assumes that inp
 
 --in or -i:         Specify file input folder.  
 --out or -o:        Specify output file location, including image file extension of your choice.   
+--random or -r:     Randomize order of input tiles. 
+--seed or -s:       Specify a random seed to use.
+--dpi or -d:        Write output image with a specific dpi (does not affect image size).
 
 
