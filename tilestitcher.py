@@ -79,11 +79,9 @@ def pad_image_list(input_list, newsize):
         statistics_list.append(randint)
 
     print(f"Padded list from {image_count} to {len(input_list)} items.")
-
-    if DEBUGLOG == True:
-        for variant in range(0, image_count):
-            count = statistics_list.count(variant)
-            print(f"Tile {variant} occured {count} times in list ({round((count/newsize)*100, 1)}% of total)")
+    for variant in range(0, image_count):
+        count = statistics_list.count(variant)
+        print(f"Tile {variant} occured {count} times in list ({round((count/newsize)*100, 1)}% of total)")
 
     return input_list
 
