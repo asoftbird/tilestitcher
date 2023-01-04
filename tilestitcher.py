@@ -1,18 +1,21 @@
 import os
 import sys
 import getopt
+import random
 from PIL import Image
 
 argv = sys.argv[1:]
 
-options = "i:o:x:y:v"
-longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "verbose"]
+options = "i:o:x:y:rs:v"
+longoptions = ["help", "in=", "out=", "xsize=", "ysize=", "random", "seed=", "verbose"]
 helptext = [
     "--help or -h: Print this help list.", 
     "--in or -i: Specify file input folder.", 
     "--out or -o: Specify output file location.",
     "--xsize or -x: Specify tile grid size in the X direction.",
     "--ysize or -y: Specify tile grid size in the Y direction.",
+    "--random or -r: Randomize placement of tiles in grid."
+    "--seed or -s: Random seed."
     "--verbose or -v: Write debug info to console during operation."
     ]
 
@@ -29,6 +32,8 @@ OUTPUT_PATH = os.getcwd()+"\\output\\output.png"
 GRIDSIZE_X = 0
 GRIDSIZE_Y = 0
 DEBUGLOG = False
+RANDOMIZE = False
+SEED = int(random())
 
 if not opts:
     sys.exit("Not enough arguments! Use --help for help.")
@@ -46,10 +51,16 @@ for opt, arg in opts:
         GRIDSIZE_X = int(arg)
     elif opt in ['-y', '--ysize']:
         GRIDSIZE_Y = int(arg)
+    elif opt in ['-r', '--random']:
+        RANDOMIZE = True
+    elif opt in ['-s', '--random']:
+        SEED = int(arg)
     elif opt in ['-v', '--verbose']:
         DEBUGLOG = True
     else:
         sys.exit("Not enough arguments! Use --help for help.")
+
+ # if --seed isn't used, use random seed
 
 if GRIDSIZE_X == 0 or GRIDSIZE_Y == 0:
     sys.exit("Grid size cannot be 0; use --xsize and --ysize to specify tile grid dimensions.")
@@ -63,6 +74,11 @@ def merge_images(filelist, gridsize_x, gridsize_y):
     global resulting_width, resulting_height
 
     image_objects = [Image.open(INPUT_PATH+filename) for filename in filelist]
+
+    if RANDOMIZE == True:
+        print(f"Randomizing tile order with seed {SEED}.")
+        random.seed(SEED)
+        random.shuffle(image_objects)
 
     # assuming all images have the same size
     (image_width, image_height) = image_objects[0].size
