@@ -15,11 +15,11 @@ These are then tiled in the following order: (left to right, bottom to top)
 
 Grid can be any size you want, I've only tested with square configurations but I'm pretty sure rectangular grids also work.
 
-If there are less images than grid tiles, the script randomly selects images from the input set to pad the grid to the set size. 
+If there are less images than grid tiles, the script repeats images from the input set to pad the grid to the set size. 
+When padding is used, the script shows how often each tile is used.
 
 
-## Usage
-
+## Usage  
 Run the script in commandline using python, ie.  
 `python tilestitcher.py -i input/ -o output/output.png -x 5 -y 5 -v`.    
 
@@ -27,7 +27,7 @@ Use --help for general help on its usage.
 If the input or output directories aren't specified, the script assumes that input images are located in `\current-dir\input\` and will write the output to `\current-dir\output\output.png`. 
 
 **Required arguments:**  
---size or -s:       Specify tile grid size in both X and Y directions  
+--gridsize or -g:   Specify tile grid size in both X and Y directions  
 OR:  
 --xsize or -x:      Specify tile grid size in the X direction.  
 --ysize or -y:      Specify tile grid size in the Y direction.  
