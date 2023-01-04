@@ -60,8 +60,6 @@ for opt, arg in opts:
     else:
         sys.exit("Not enough arguments! Use --help for help.")
 
- # if --seed isn't used, use random seed
-
 if GRIDSIZE_X == 0 or GRIDSIZE_Y == 0:
     sys.exit("Grid size cannot be 0; use --xsize and --ysize to specify tile grid dimensions.")
 
@@ -73,11 +71,19 @@ for file in os.listdir(INPUT_PATH):
 def pad_image_list(input_list, newsize):
     image_count = len(input_list)
     add_count = newsize - image_count
+    statistics_list = []
 
     for _ in range(0, add_count):
-        input_list.append(input_list[random.randint(0, image_count)])
+        randint = random.randint(0, image_count-1)
+        input_list.append(input_list[randint])
+        statistics_list.append(randint)
 
     print(f"Padded list from {image_count} to {len(input_list)} items.")
+
+    if DEBUGLOG == True:
+        for variant in range(0, image_count):
+            count = statistics_list.count(variant)
+            print(f"Tile {variant} occured {count} times in list ({round((count/newsize)*100, 1)}% of total)")
 
     return input_list
 
