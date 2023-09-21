@@ -122,7 +122,7 @@ def merge_images(filelist, gridsize_x, gridsize_y):
     resulting_width = image_width * gridsize_x
     resulting_height = image_height * gridsize_y
 
-    image_combined = Image.new('RGB', (resulting_width, resulting_height))
+    image_combined = Image.new('RGBA', (resulting_width, resulting_height))
 
     image_index = 0
     for y_index in range(0, gridsize_y):
